@@ -1,43 +1,46 @@
 <template>
-  <v-card
-    height="400"
-    width="256"
-    class="mx-auto"
-  >
-    <v-navigation-drawer permanent>
-      <v-list-item>
-        <v-list-item-content>
-          <v-list-item-title class="title">
-            Application
-          </v-list-item-title>
-          <v-list-item-subtitle>
-            subtext
-          </v-list-item-subtitle>
-        </v-list-item-content>
-      </v-list-item>
+    <v-app-bar
+      absolute
+      color="deep-purple accent-4"
+      dense
+      blue
+      
+    >
+      <v-app-bar-nav-icon></v-app-bar-nav-icon>
 
-      <v-divider></v-divider>
+      <v-toolbar-title>Page title</v-toolbar-title>
 
-      <v-list
-        dense
-        nav
+      <v-spacer></v-spacer>
+
+      <v-btn icon>
+        <v-icon>mdi-heart</v-icon>
+      </v-btn>
+
+      <v-btn icon>
+        <v-icon>mdi-magnify</v-icon>
+      </v-btn>
+
+      <v-menu
+        left
+        bottom
       >
-        <v-list-item
-          v-for="item in items"
-          :key="item.title"
-          link
-        >
-          <v-list-item-icon>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-icon>
+        <template v-slot:activator="{ on }">
+          <v-btn icon v-on="on">
+            <v-icon>mdi-dots-vertical</v-icon>
+          </v-btn>
+        </template>
 
-          <v-list-item-content>
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
-  </v-card>
+        <v-list>
+          <v-list-item
+            v-for="n in 5"
+            :key="n"
+            @click="() => {}"
+          >
+            <v-list-item-title>Option {{ n }}</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
+    </v-app-bar>
 </template>
 <script>
   export default {
