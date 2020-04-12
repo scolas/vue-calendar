@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
-import Nav from './components/nav.vue'
+
 import vuetify from './plugins/vuetify';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
@@ -28,7 +28,3 @@ new Vue({
   render: h => h(App)
 }).$mount('#app')
 
-new Vue({
-  vuetify,
-  render: h => h(Nav)
-}).$mount('#nav')

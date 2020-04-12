@@ -125,6 +125,7 @@
 </template>
 
 <script>
+var moment = require('moment');
 import { db } from '@/main'
 export default {
     data: () => ({
@@ -155,18 +156,14 @@ export default {
         if (!start || !end) {
           return ''
         }
-
         const startMonth = this.monthFormatter(start)
         const endMonth = this.monthFormatter(end)
         const suffixMonth = startMonth === endMonth ? '' : endMonth
-
         const startYear = start.year
         const endYear = end.year
         const suffixYear = startYear === endYear ? '' : endYear
-
         const startDay = start.day + this.nth(start.day)
         const endDay = end.day + this.nth(end.day)
-
         switch (this.type) {
           case 'month':
             return `${startMonth} ${startYear}`
@@ -189,6 +186,39 @@ export default {
     },
     methods: {
         async getEvents() {
+            let events = [];
+             //let datas = [];
+            fetch("https://calendareventapi.azurewebsites.net/api/events")
+            .then(response => response.json())
+            .then((data) => {
+              //datas = data;
+              //console.log(datas);
+              console.log(data);
+               data.forEach(function(item){
+                  
+                  let appData = item;
+                  appData.id = toString(item.id);
+                  
+                  let startDay = moment(item.day).format('YYYY-MM-DD');
+                  console.log(startDay);
+                  appData.start = startDay;
+                  appData.end = startDay;
+                  
+                  appData.color = "#820a28";
+                  
+                  events.push(appData);
+                })
+            })
+
+
+              this.events = events;
+            
+                  
+        //this.events = events;
+            
+            
+        },
+        async getEvents1() {
             let snapshot = await  db.collection("calEvent").get();
             let events = [];
             snapshot.forEach(doc => {
@@ -200,7 +230,7 @@ export default {
         },
         async addEvent(){
             if(this.name && this.start && this.end){
-                await db.collection('calEvnt').add({
+                await db.collection('calEvent').add({
                     name: this.name,
                     details: this.details,
                     start: this.start,
@@ -216,6 +246,27 @@ export default {
             }else{
                 alert("Name, start and end date are required");
             }
+        },
+        async addNewEvent(){
+            fetch("https://calendareventapi.azurewebsites.net/api/events", {
+              method: "post",
+              headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+              },
+
+              //make sure to serialize your JSON body
+              body: JSON.stringify({
+                date: this.start,
+                location: "addNewEvent calendar",
+                setBy: this.name,
+                title: this.name
+              })
+            })
+            .then( (response) => { 
+              //do something awesome that makes the world a better place
+              console.log("Post to table"+response);
+            });
         },
         async updateEvent(ev){
             await db.collection('calEvent').doc(this.currentlyEditing).update({
@@ -254,31 +305,26 @@ export default {
                 this.selectedElement = nativeEvent.target
                 setTimeout(() => this.selectedOpen = true, 10)
             }
-
             if (this.selectedOpen) {
                 this.selectedOpen = false
                 setTimeout(open, 10)
             } else {
                 open()
             }
-
             nativeEvent.stopPropagation()
         },
         updateRange ({ start, end }) {
             const events = []
-
             const min = new Date(`${start.date}T00:00:00`)
             const max = new Date(`${end.date}T23:59:59`)
             const days = (max.getTime() - min.getTime()) / 86400000
             const eventCount = this.rnd(days, days + 20)
-
             for (let i = 0; i < eventCount; i++) {
             const allDay = this.rnd(0, 3) === 0
             const firstTimestamp = this.rnd(min.getTime(), max.getTime())
             const first = new Date(firstTimestamp - (firstTimestamp % 900000))
             const secondTimestamp = this.rnd(2, allDay ? 288 : 8) * 900000
             const second = new Date(first.getTime() + secondTimestamp)
-
             events.push({
                 name: this.names[this.rnd(0, this.names.length - 1)],
                 start: this.formatDate(first, !allDay),
@@ -286,7 +332,6 @@ export default {
                 color: this.colors[this.rnd(0, this.colors.length - 1)],
             })
             }
-
             this.start = start
             this.end = end
             this.events = events
@@ -305,6 +350,5 @@ export default {
             : `${a.getFullYear()}-${a.getMonth() + 1}-${a.getDate()}`
         },
     }
-
  };
 </script>
