@@ -85,7 +85,7 @@
         >
           <v-card color="grey lighten-4" min-width="350px" flat>
             <v-toolbar :color="selectedEvent.color" dark>
-              <v-btn @click="deleteEvent(selectedEvent.id)" icon>
+              <v-btn @click="newDeleteEvent(selectedEvent.id)" icon>
                 <v-icon>mdi-delete</v-icon>
               </v-btn>
               <v-toolbar-title v-html="selectedEvent.name"></v-toolbar-title>
@@ -199,6 +199,7 @@ export default {
                   let startDay = moment(item.day).format('YYYY-MM-DD');
                   appData.id = item.id;             
                   appData.start = startDay;
+                  appData.title = item.details;
                   appData.end = startDay;
                   appData.details = item.name;
                   appData.color = "#820a28";
@@ -254,7 +255,7 @@ export default {
                 title: this.name,
                 day: this.start,
                 location: "addNewEvent calendar",
-                setBy: this.name,
+                setBy: "scott",
               })
             })
             .then( (response) => { 
@@ -282,10 +283,10 @@ export default {
               //make sure to serialize your JSON body
               body: JSON.stringify({
                 name: ev.name,
-                title: ev.title,
+                title: ev.details,
                 day: ev.start,
-                location: "addNewEvent calendar",
-                setBy: ev.details
+                location: "Location",
+                setBy: "scott"
               })
             })
             .then( (response) => { 
@@ -297,6 +298,17 @@ export default {
         },
         async deleteEvent(ev){
             await db.collection('calEvent').doc(ev).delete();
+            this.selectedOpen = false;
+            this.getEvents(); 
+        },
+        async newDeleteEvent(ev){
+            console.log(ev);
+            fetch("https://calendareventapi.azurewebsites.net/api/events/"+ev+"", {
+              method: "delete",
+              headers: {
+                'Content-Type': 'application/json'
+              },
+            })
             this.selectedOpen = false;
             this.getEvents(); 
         },
