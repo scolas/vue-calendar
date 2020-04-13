@@ -46,7 +46,7 @@
     <v-dialog v-model="dialog" max-width="500">
         <v-card>
             <v-container>
-                <v-form @submit.prevent="addEvent">
+                <v-form @submit.prevent="addNewEvent">
                     <v-text-field v-model="name" type="text" label="event name (required)"></v-text-field>
                     <v-text-field v-model="details" type="text" label="details"></v-text-field>
                     <v-text-field v-model="start" type="date" label="start "></v-text-field>
@@ -115,7 +115,7 @@
                 <v-btn text color="secondary" @click="selectedOpen = false">Close</v-btn>
                 <v-btn text v-if="currentlyEditing !== selectedEvent.id"
                  @click.prevent="editEvent(selectedEvent)">Edit</v-btn>              
-                <v-btn text v-else @click.prevent="updateEvent(selectedEvent)">Save</v-btn> 
+                <v-btn text v-else @click.prevent="updateNewEvent(selectedEvent)">Save</v-btn> 
             </v-card-actions>
           </v-card>
         </v-menu>
@@ -193,30 +193,23 @@ export default {
             .then((data) => {
               //datas = data;
               //console.log(datas);
-              console.log(data);
+              
                data.forEach(function(item){
-                  
                   let appData = item;
-                  appData.id = toString(item.id);
-                  
                   let startDay = moment(item.day).format('YYYY-MM-DD');
-                  console.log(startDay);
+                  appData.id = item.id;             
                   appData.start = startDay;
                   appData.end = startDay;
-                  
+                  appData.details = item.name;
                   appData.color = "#820a28";
-                  
+
                   events.push(appData);
                 })
             })
 
 
               this.events = events;
-            
-                  
-        //this.events = events;
-            
-            
+            console.log(this.events);
         },
         async getEvents1() {
             let snapshot = await  db.collection("calEvent").get();
@@ -257,10 +250,11 @@ export default {
 
               //make sure to serialize your JSON body
               body: JSON.stringify({
-                date: this.start,
+                name: this.name,
+                title: this.name,
+                day: this.start,
                 location: "addNewEvent calendar",
                 setBy: this.name,
-                title: this.name
               })
             })
             .then( (response) => { 
@@ -269,8 +263,34 @@ export default {
             });
         },
         async updateEvent(ev){
+          console.log("this is id currently editing"+this.currentlyEditing);
             await db.collection('calEvent').doc(this.currentlyEditing).update({
                 details: ev.details
+            });
+            this.selectedOpen = false;
+            this.currentlyEditing = null;
+        },
+        async updateNewEvent(ev){
+            fetch("https://localhost:44307/api/events/"+this.currentlyEditing+"", {
+              method: "put",
+              headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+              },
+              
+
+              //make sure to serialize your JSON body
+              body: JSON.stringify({
+                name: ev.name,
+                title: ev.title,
+                day: ev.start,
+                location: "addNewEvent calendar",
+                setBy: ev.details
+              })
+            })
+            .then( (response) => { 
+              //do something awesome that makes the world a better place
+              console.log("Put to table"+response);
             });
             this.selectedOpen = false;
             this.currentlyEditing = null;
