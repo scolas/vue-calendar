@@ -271,7 +271,7 @@ export default {
             this.currentlyEditing = null;
         },
         async updateNewEvent(ev){
-            fetch("https://localhost:44307/api/events/"+this.currentlyEditing+"", {
+            fetch("https://calendareventapi.azurewebsites.net/api/events/"+this.currentlyEditing+"", {
               method: "put",
               headers: {
                 'Accept': 'application/json',
