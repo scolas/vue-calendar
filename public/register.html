@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <style>
+        #loginform {
+            align: center;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            margin-right: 10px;
+            margin-left: 10px;
+        }
+        #center {
+            text-align: center;
+        }
+        .btn #pass2{
+            align: center;
+        }
+    </style>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="   crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+
+    <script>
+      $(function () {
+        var token = sessionStorage.getItem('token');
+        var headers = {};
+          if (token) {
+              window.location='login.html';
+          }
+        $('#register').submit(function(e){
+          var loginData = {
+            Email: $("#exampleInputEmail1").val(),
+            password: $("#exampleInputPassword1").val(),
+            ConfirmPassword: $("#exampleInputPassword1").val()
+          };
+
+
+            $.ajax({
+              type: "POST",  
+              url: "https://eventcalendarapi.azurewebsites.net/api/account/register",
+              data: loginData,
+
+                complete: function() {
+                  //called when complete
+                  console.log("complete");
+                },
+
+                success: function(e, resonse, xhr, ajaxOptions, thrownError) {
+                  //called when successful
+                  alert("success"+e);
+                  console.log("error "+xhr.status+""+ xhr.responseText+""+thrownError);
+                  window.location='welcome.html';
+                },
+
+                error: function(resonse, xhr, ajaxOptions, thrownError) {
+                  console.log(resonse+"error "+xhr.status+""+ xhr.responseText+""+thrownError);
+                },
+            });
+          });
+      
+//oninput='up2.setCustomValidity(up2.value != up.value ? "Passwords do not match." : "")'
+
+      });
+        
+    </script>
+  </head>
+  <body>
+    
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="#">Navbar</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
+          <a class="nav-item nav-link" href="welcome.html">Welcome</a>
+          <a class="nav-link" href="about.html">About Us</a>
+          <a class="nav-link" href="todo.html">Todo</a>
+          <a class="nav-link" href="Login.html">Login</a>
+          <a class="nav-link" href="register.html">Register</a>
+          <a class="nav-item nav-link" href="dashboard.html">Dashboard</a>
+          <a class="nav-item nav-link" href="logout.html">Logout</a>
+        </div>
+      </div>
+    </nav>
+    <div id="center">
+        <h1>Register</h1>
+    </div>
+    <div id="register">
+        <form id="register" >
+            <div class="form-group">
+            <label for="exampleInputEmail1">Email address</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+            </div>
+            <div class="form-group">
+            <label for="exampleInputPassword1">Password</label>
+            <input type="password" class="form-control" id="exampleInputPassword1" name="up">
+            </div>
+            <div class="form-group" id="pass2">
+                <label for="exampleInputPassword2">Confirm Password</label>
+                <input type="password" class="form-control" id="exampleInputPassword2" name="up2">               
+           </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+  </body>
+</html>
+
+

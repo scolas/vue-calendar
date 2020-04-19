@@ -126,7 +126,7 @@
 
 <script>
 var moment = require('moment');
-import { db } from '@/main'
+import { db } from './fb'
 export default {
     data: () => ({
         today: new Date().toISOString().substr(0,10),

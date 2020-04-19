@@ -1,18 +1,15 @@
 <template>
   <v-app>
     <v-content>
-      <cal/>
+      <h1>Dashboard component</h1>
     </v-content>
   </v-app>
 </template>
 
 <script>
-import Calendar from './components/Calendar.vue'
+//import Calendar from '../../components/Calendar.vue'
 export default {
-  name: 'App',
-  components: {
-    cal: Calendar,
-  },
+  name: 'Dash',
   data: () => ({
     //
   })
