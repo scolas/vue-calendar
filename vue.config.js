@@ -22,7 +22,7 @@ module.exports = {
       // entry for the page
       entry: 'src/pages/dashboard/main.js',
       // the source template
-      template: 'public/index.html',
+      template: 'public/Dashboard.html',
       // output as dist/dashboard.html
       filename: 'dashboard.html',
       // when using title option,
@@ -45,6 +45,20 @@ module.exports = {
       // chunks to include on this page, by default includes
       // extracted common chunks and vendor chunks.
       chunks: ['chunk-vendors', 'chunk-common', 'todo']
+    },
+    home: {
+      // entry for the page
+      entry: 'src/pages/home/main.js',
+      // the source template
+      template: 'public/home.html',
+      // output as dist/dashboard.html
+      filename: 'home.html',
+      // when using title option,
+      // template title tag needs to be <title><%= htmlWebpackPlugin.options.title %></title>
+      title: 'Home Page',
+      // chunks to include on this page, by default includes
+      // extracted common chunks and vendor chunks.
+      chunks: ['chunk-vendors', 'chunk-common', 'home']
     },
     // when using the entry-only string format,
     // template is inferred to be `public/subpage.html`

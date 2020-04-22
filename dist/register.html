@@ -34,45 +34,38 @@
 
     <script>
       $(function () {
-
-
-
-        $('#loginform').submit(function(e){
-          e.preventDefault();
-          e.stopPropagation();
+        var token = sessionStorage.getItem('token');
+        var headers = {};
+          if (token) {
+              window.location='login.html';
+          }
+        $('#register').submit(function(e){
           var loginData = {
-            Email: '"'+$("#exampleInputEmail1").val()+'"',
-            password: '"'+$("#exampleInputPassword1").val()+'"',
-            ConfirmPassword: '"'+$("#exampleInputPassword1").val()+'"'
-          };
-          var loginData1 = {
-            ConfirmPassword: "Password1.",
-            Email: "scolas@test.com",
-            password: "Password1."
-
+            Email: $("#exampleInputEmail1").val(),
+            password: $("#exampleInputPassword1").val(),
+            ConfirmPassword: $("#exampleInputPassword1").val()
           };
 
-          console.log(loginData["Email"]);
+
             $.ajax({
               type: "POST",  
               url: "https://eventcalendarapi.azurewebsites.net/api/account/register",
-              data: loginData1,
+              data: loginData,
 
                 complete: function() {
                   //called when complete
-                  alert("complete");
                   console.log("complete");
                 },
 
-                success: function(e) {
+                success: function(e, resonse, xhr, ajaxOptions, thrownError) {
                   //called when successful
                   alert("success"+e);
-                  console.log("success"+e);
+                  console.log("error "+xhr.status+""+ xhr.responseText+""+thrownError);
+                  window.location='welcome.html';
                 },
 
-                error: function() {
-                  alert("error");
-                  console.log("error");
+                error: function(resonse, xhr, ajaxOptions, thrownError) {
+                  console.log(resonse+"error "+xhr.status+""+ xhr.responseText+""+thrownError);
                 },
             });
           });
@@ -99,14 +92,15 @@
           <a class="nav-link" href="Login.html">Login</a>
           <a class="nav-link" href="register.html">Register</a>
           <a class="nav-item nav-link" href="dashboard.html">Dashboard</a>
+          <a class="nav-item nav-link" href="logout.html">Logout</a>
         </div>
       </div>
     </nav>
     <div id="center">
         <h1>Register</h1>
     </div>
-    <div id="loginform">
-        <form id="loginform" >
+    <div id="register">
+        <form id="register" >
             <div class="form-group">
             <label for="exampleInputEmail1">Email address</label>
             <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">

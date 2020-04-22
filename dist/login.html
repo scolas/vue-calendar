@@ -31,88 +31,53 @@
 
     <script>
       $(function () {
-
-
-
-        $('#register').submit(function(e){
-          e.preventDefault();
-          e.stopPropagation();
-          var loginData = {
-            ConfirmPassword: "Password1.",
-            Email: "scolas@test.com",
-            password: "Password1."
-
-          };
-
-          console.log(loginData["username"]);
-            $.ajax({
-              type: "POST",  
-              url: "https://eventcalendarapi.azurewebsites.net/api/account/register",
-              data: loginData,
-
-                complete: function() {
-                  //called when complete
-                  alert("complete");
-                  console.log("complete");
-                },
-
-                success: function() {
-                  //called when successful
-                  alert("success");
-                  console.log("success");
-                },
-
-                error: function() {
-                  alert("error");
-                  console.log("error");
-                },
-            });
-          });
-      
-
+        var token = sessionStorage.getItem('token');
+        var headers = {};
+          if (token) {
+              window.location='welcome.html';
+          }
 
         $('#loginform').submit(function(e){
 
-
+          //dataType: "application/x-www-form-urlencoded",
           // MIME type for request
           var dataType = 'application/x-www-form-urlencoded';
-                var loginData = {
-                  grant_type: "Password",
-                  username: "scolas@test.com",
-                  password: "Password1."
+          //scott@calendarapi.com  pass= Password1.
+          var user = $("#exampleInputEmail1").val()
+          var pass = $("#exampleInputPassword1").val();
+          var grant = "password";
+          var param = {
+            grant_type: grant,
+            username: user,
+            password: pass
 
-                };
-          var data =  '{grant_type:"Password", username:"scolas@test.com", password: "Password1."}';
-    
-          console.log(loginData["username"]);
+          };
+
+          
           $.ajax({
-            type: "POST",  
-            dataType: dataType,
-            contentType: 'application/x-www-form-urlencoded; charset=utf-8',
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-            url: "https://eventcalendarapi.azurewebsites.net/token",
-            data: loginData,
+                type: "POST",  
+                url: "https://eventcalendarapi.azurewebsites.net/token",
+                data: param,
+                  complete: function(e) {
+                    //console.log("complete");
+                  },
 
-              complete: function(e) {
-                //called when complete
-                alert("complete");
-                console.log("complete"+e);
-              },
+                  success: function(resonse, xhr, ajaxOptions, thrownError) {
+                    console.log("  access="+resonse["access_token"]+"      token type="+resonse["token_type"]+"      expires_in="+resonse["expires_in"]+"       userName="+resonse["userName"] );
+                        // Cache the access token in session storage.
+                        sessionStorage.setItem("token", resonse["access_token"]);
+                        window.location='welcome.html';
+                  },
 
-              success: function(e) {
-                //called when successful
-                alert("success");
-                console.log("success"+e);
-              },
-
-              error: function(e) {
-                alert("error"+e);
-                console.log("error");
-              },
-            });
-            e.preventDefault();
-          e.stopPropagation();
+                  error: function(xhr, ajaxOptions, thrownError) {
+                    console.log("error "+xhr.status+""+ xhr.responseText+""+thrownError);
+                    $("#errormsg").css("display","show");
+                    $("#errormsg").text("The user name or password is inccorect")
+                  },
+          });
+          e.preventDefault();
         });
+
       });
         
     </script>
@@ -133,6 +98,7 @@
           <a class="nav-link" href="register.html">Register</a>
           <a class="nav-link" href="Login.html">Login</a>
           <a class="nav-item nav-link" href="dashboard.html">Dashboard</a>
+          <a class="nav-item nav-link" href="logout.html">Logout</a>
         </div>
       </div>
     </nav>
@@ -156,6 +122,8 @@
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
+
+        <div id="errormsg" display="none"></div>
       </div>
   </body>
 </html>
