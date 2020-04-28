@@ -66,6 +66,7 @@
                     console.log("  access="+resonse["access_token"]+"      token type="+resonse["token_type"]+"      expires_in="+resonse["expires_in"]+"       userName="+resonse["userName"] );
                         // Cache the access token in session storage.
                         sessionStorage.setItem("token", resonse["access_token"]);
+                        sessionStorage.setItem("username", user);
                         window.location='welcome.html';
                   },
 
@@ -91,7 +92,7 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-          <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
+          <a class="nav-item nav-link active" href="home.html">Home <span class="sr-only">(current)</span></a>
           <a class="nav-item nav-link" href="welcome.html">Welcome</a>
           <a class="nav-link" href="about.html">About Us</a>
           <a class="nav-link" href="todo.html">Todo</a>

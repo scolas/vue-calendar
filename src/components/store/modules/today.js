@@ -29,8 +29,9 @@ const actions = {
     async fetchEvents({ commit }) {
         let events = [];
         var moment = require('moment');
+        var uemail = sessionStorage.getItem('username');
          //let datas = [];
-        fetch("https://calendareventapi.azurewebsites.net/api/events")
+        fetch("https://eventcalendarapi.azurewebsites.net/api/events?username="+uemail+"")
         .then(response => response.json())
         .then((data) => {
           //datas = data;
@@ -51,7 +52,7 @@ const actions = {
         })
 
           
-        console.log(events);
+        //console.log(events);
         commit('setEvents', events);
     },
 

@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-content>
-      <TodayHeader/>
+     
       <Today/>
     </v-content>
   </v-app>
@@ -9,12 +9,12 @@
 
 <script>
 import Today from "../../components/Today.vue"
-import TodayHeader from "../../components/TodayHeader"
+//import TodayHeader from "../../components/TodayHeader"
 
 export default {
   name: 'Home',
   components: {
-    TodayHeader,
+    //TodayHeader,
     Today
   },
   data: () => ({

@@ -1,14 +1,19 @@
 <template>
-    <div>
-        <h1>Today Tuesday 4/21/20  </h1>
-        <i id="weather"  class="fas fa-cloud-sun"></i>
-        <hr>
+    <div id="headerContainer">
+        <div id="dateHeader">
+            <h1>Today Tuesday 4/21/20  </h1>
+            <i id="weather"  class="fas fa-cloud-sun"></i>
+        </div>
+        <div id="addheader">
+           <a v-bind:is-published="true" @click="dialog = true"><i class="fas fa-plus-circle"></i></a> 
+        </div>
+        <br>
     </div>
 </template>
 <script>
 export default {
-    name: "TodayHeader"
-    
+    name: "TodayHeader",
+    props: ['dialog'],
 }
 </script>
 <style scoped>
@@ -24,10 +29,18 @@ h1{
     margin: 0;
     font-weight: 400;
     margin-block-start: 0.67em;
- 
     margin-inline-start: 0px;
     margin-inline-end: 0px;
 }
-
+#headerContainer{
+    width: 100%;
+    height: 150px;
+}
+#dateHeader{
+    width: 50%;
+    float: left;
+}
+#addHeader{
+}
 
 </style>

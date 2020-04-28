@@ -187,13 +187,14 @@ export default {
     methods: {
         async getEvents() {
             let events = [];
+            var uemail = sessionStorage.getItem('username');
              //let datas = [];
-            fetch("https://calendareventapi.azurewebsites.net/api/events")
+            fetch("https://eventcalendarapi.azurewebsites.net/api/events?username="+uemail+"")
             .then(response => response.json())
             .then((data) => {
               //datas = data;
               //console.log(datas);
-              
+              //https://calendareventapi.azurewebsites.net/api/events
                data.forEach(function(item){
                   let appData = item;
                   let startDay = moment(item.day).format('YYYY-MM-DD');
@@ -242,13 +243,13 @@ export default {
             }
         },
         async addNewEvent(){
-            fetch("https://calendareventapi.azurewebsites.net/api/events", {
+            fetch("https://eventcalendarapi.azurewebsites.net/api/events", {
               method: "post",
               headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
               },
-
+              //https://calendareventapi.azurewebsites.net/api/events
               //make sure to serialize your JSON body
               body: JSON.stringify({
                 name: this.name,
@@ -272,14 +273,14 @@ export default {
             this.currentlyEditing = null;
         },
         async updateNewEvent(ev){
-            fetch("https://calendareventapi.azurewebsites.net/api/events/"+this.currentlyEditing+"", {
+            fetch("https://eventcalendarapi.azurewebsites.net/api/events/"+this.currentlyEditing+"", {
               method: "put",
               headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
               },
               
-
+              //https://calendareventapi.azurewebsites.net/api/events/
               //make sure to serialize your JSON body
               body: JSON.stringify({
                 name: ev.name,
@@ -303,7 +304,8 @@ export default {
         },
         async newDeleteEvent(ev){
             console.log(ev);
-            fetch("https://calendareventapi.azurewebsites.net/api/events/"+ev+"", {
+            //https://calendareventapi.azurewebsites.net/api/events/
+            fetch("https://eventcalendarapi.azurewebsites.net/api/events/"+ev+"", {
               method: "delete",
               headers: {
                 'Content-Type': 'application/json'
@@ -332,6 +334,7 @@ export default {
             this.currentlyEditing = ev.id;
         },
         showEvent ({ nativeEvent, event }) {
+            console.log(event);
             const open = () => {
                 this.selectedEvent = event
                 this.selectedElement = nativeEvent.target

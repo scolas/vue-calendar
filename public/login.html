@@ -66,6 +66,7 @@
                     console.log("  access="+resonse["access_token"]+"      token type="+resonse["token_type"]+"      expires_in="+resonse["expires_in"]+"       userName="+resonse["userName"] );
                         // Cache the access token in session storage.
                         sessionStorage.setItem("token", resonse["access_token"]);
+                        sessionStorage.setItem("username", user);
                         window.location='welcome.html';
                   },
 
