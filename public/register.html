@@ -49,7 +49,7 @@
 
             $.ajax({
               type: "POST",  
-              url: "https://eventcalendarapi.azurewebsites.net/api/account/register",
+              url: "https://eventapicalendar.azurewebsites.net/api/account/register",
               data: loginData,
 
                 complete: function() {
@@ -60,6 +60,8 @@
                 success: function(e, resonse, xhr, ajaxOptions, thrownError) {
                   //called when successful
                   alert("success"+e);
+                  sessionStorage.setItem("token", resonse["access_token"]);
+                  sessionStorage.setItem("username", loginData.Email);
                   console.log("error "+xhr.status+""+ xhr.responseText+""+thrownError);
                   window.location='welcome.html';
                 },

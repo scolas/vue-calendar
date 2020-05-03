@@ -109,7 +109,7 @@ export default {
            var token = sessionStorage.getItem('token');
            var uemail = sessionStorage.getItem('username');
            console.log( "this is email:"+uemail+" token"+token);
-            fetch("https://eventcalendarapi.azurewebsites.net/api/events", {
+            fetch("https://eventapicalendar.azurewebsites.net/api/events", {
               method: "post",
               headers: {
                 'Accept': 'application/json',
@@ -175,7 +175,7 @@ export default {
         async updateNewEvent(ev){
             var uemail = sessionStorage.getItem('username');
             console.log(this.currentlyEditing+"this is id"+this.name+"update event test"+JSON.stringify(ev));
-            fetch("https://eventcalendarapi.azurewebsites.net/api/events/"+this.currentlyEditing+"", {
+            fetch("https://eventapicalendar.azurewebsites.net/api/events/"+this.currentlyEditing+"", {
               method: "put",
               headers: {
                 'Accept': 'application/json',

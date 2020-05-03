@@ -189,7 +189,7 @@ export default {
             let events = [];
             var uemail = sessionStorage.getItem('username');
              //let datas = [];
-            fetch("https://eventcalendarapi.azurewebsites.net/api/events?username="+uemail+"")
+            fetch("https://eventapicalendar.azurewebsites.net/api/events?username="+uemail+"")
             .then(response => response.json())
             .then((data) => {
               //datas = data;
@@ -243,7 +243,7 @@ export default {
             }
         },
         async addNewEvent(){
-            fetch("https://eventcalendarapi.azurewebsites.net/api/events", {
+            fetch("https://eventapicalendar.azurewebsites.net/api/events", {
               method: "post",
               headers: {
                 'Accept': 'application/json',
@@ -273,7 +273,7 @@ export default {
             this.currentlyEditing = null;
         },
         async updateNewEvent(ev){
-            fetch("https://eventcalendarapi.azurewebsites.net/api/events/"+this.currentlyEditing+"", {
+            fetch("https://eventapicalendar.azurewebsites.net/api/events/"+this.currentlyEditing+"", {
               method: "put",
               headers: {
                 'Accept': 'application/json',
@@ -305,7 +305,7 @@ export default {
         async newDeleteEvent(ev){
             console.log(ev);
             //https://calendareventapi.azurewebsites.net/api/events/
-            fetch("https://eventcalendarapi.azurewebsites.net/api/events/"+ev+"", {
+            fetch("https://eventapicalendar.azurewebsites.net/api/events/"+ev+"", {
               method: "delete",
               headers: {
                 'Content-Type': 'application/json'
