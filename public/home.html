@@ -18,8 +18,12 @@
     <style>
       #container{
         width: 100%;
-        background: #F2F3F5;
+        /*background: #F2F3F5;*/
+        background: #e6eef7;
         margin: auto;
+      }
+      #app{
+        background: #e6eef7;
       }
       #sideNav{
         width: 20%;
@@ -77,9 +81,50 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
   $(document).ready(function(){  
-
    
-  }); 
+          var max_fields = 10;
+          var wrapper = $(".container1");
+          var add_button = $(".add_form_field");
+
+          var x = 1;
+          $(add_button).click(function(e) {
+              e.preventDefault();
+              if (x < max_fields) {
+                  x++;
+                  $(wrapper).append('<div><input type="text" name="xyz[]" id="invitey" placeholder="Enter Invite" class="form-control name_list"><a href="#" class="delete">Delete</a></div>'); //add input box
+              } else {
+                  alert('You Reached the limits')
+              }
+          });
+
+          $(wrapper).on("click", ".delete", function(e) {
+              e.preventDefault();
+              $(this).parent('div').remove();
+              x--;
+          })
+
+          $(wrapper).on("click", "#closemodal", function(e) {
+              e.preventDefault();
+              $(this).parent('div').remove();
+              x--;
+              console.log("close");
+          })
+
+          $('form').on('submit',function(e) {
+              e.preventDefault();
+              var title = $('#eventTitle').val();
+              var location = $('#eventLocation').val();
+              var sdate = $('#eventStartDate').val();
+              var edate = $('#eventEndDate').val();
+              var sTime = $('#eventEndDate').val();
+              var eTime = $('#eventEndTime').val();
+              var values = $("input[id='invitey']").map(function(){return $(this).val();}).get();
+
+              //console.log("Save"+ title+location+eTime+sTime+" this is invite"+values);
+          });
+    });
+   
+ 
 </script>
   </head>
   <body>
@@ -126,7 +171,8 @@
     <div id="sideNav">
       <img src="ava.png" alt="Avatar" style="width:50px">
       <br><div id="name"><strong>Hello Tim</strong></div>
-      <br><button class="button button3">Create New Event  +</button>
+      <br><button data-toggle="modal" data-target="#myModal" class="button button3">Create New Event  +</button>
+      
       <a href="home.html"> <i class="fas fa-house-user"></i><span>Home</span></a>
 
       <a href="dashboard.html"><i class="fas fa-chart-line"></i><span>Dashboard</span></a>
@@ -136,9 +182,10 @@
       <a href="#"><i class="fas fa-user-cog"></i><span>Settings</span></a> 
     </div>
   
+    Today Month
 
-
-    <div id="app"></div>
+    <div id="app">
+    </div>
 
   </div>
 

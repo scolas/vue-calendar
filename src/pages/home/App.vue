@@ -38,18 +38,16 @@ export default {
 
 
       #app{  
-        background: #F2F3F5;
+        /*background: #F2F3F5;*/
       }
-      
-
-
 
       #today{  
-        width: 33%;
+        width: 40%;
         float: left;
         background: white;
-        margin-left: 15%;
-        border-radius: 5px;
+        margin-left: 3%;
+        border-radius: 25px;
+        margin-top: 7%;
         padding-left: 12px;
         padding-right: 12px;
         padding-top: 12px;

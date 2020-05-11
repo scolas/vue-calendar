@@ -1,8 +1,7 @@
 <template>
     <div id="headerContainer">
         <div id="dateHeader">
-            <h1>Today Tuesday 4/21/20  </h1>
-            <i id="weather"  class="fas fa-cloud-sun"></i>
+            <p>Today Tuesday 4/21/20<i id="weather"  class="fas fa-cloud-sun"></i></p>
         </div>
         <div id="addheader">
            <a v-bind:is-published="true" @click="dialog = true"><i class="fas fa-plus-circle"></i></a> 
@@ -37,10 +36,11 @@ h1{
     height: 150px;
 }
 #dateHeader{
-    width: 50%;
+    width: 78%;
     float: left;
 }
 #addHeader{
+    width: 19%;
 }
 
 </style>
