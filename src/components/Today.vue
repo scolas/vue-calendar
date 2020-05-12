@@ -7,7 +7,7 @@
             <div id="addheader">
                 <!--<a v-bind:is-published="true" @click="openModal()"><i class="fas fa-plus-circle"></i></a>--> 
                 <!--<button type="button" data-toggle="modal" data-target="#myModal"><i class="fas fa-plus-circle"></i></button>-->
-                <button type="button" data-toggle="modal" data-target="#addModal"><i class="fas fa-plus-circle"></i></button>
+                <button type="button" @click="openmodal()" data-toggle="modal" data-target="#addModal"><i class="fas fa-plus-circle"></i></button>
             </div>
             <br>
         </div>
@@ -32,11 +32,11 @@
         </div> 
 
 
-            <!-- Modal -->
+            <!--Edit Modal -->
             <div class="modal fade" id="myModal" role="dialog">
                 <div class="modal-dialog">
                 
-                <!-- Modal content-->
+                <!-- Edit Modal content-->
                 <div class="modal-content">
                     
                     <div class="modal-header">
@@ -46,22 +46,22 @@
                     </div>
 
                     <form class="modal-body">
-                         <input type="text" class="form-control" id="eventTitle3" placeholder="Event Title">
+                         <input type="text" class="form-control" id="eventTitleEdit" placeholder="Event Title">
                         
-                        <input  type="text" class="form-control" id="eventLocation3" placeholder="Location">
+                        <input  type="text" class="form-control" id="eventLocationEdit" placeholder="Location">
                  
                         <div id="startContainer">
-                            <input  type="date" class="form-control" id="eventStartDate3" placeholder="Start Date">
-                            <input type="time" class="form-control" id="eventStartTime3" placeholder="Start Time">
+                            <input  type="date" class="form-control" id="eventStartDateEdit" placeholder="Start Date">
+                            <input type="time" class="form-control" id="eventStartTimeEdit" placeholder="Start Time">
                         </div>
                         <div id="endContainer">
-                            <input  type="date" class="form-control" id="eventEndDate3" placeholder="End Date">
-                            <input  type="time" class="form-control" id="eventEndTime3" placeholder="End Time">
+                            <input  type="date" class="form-control" id="eventEndDateEdit" placeholder="End Date">
+                            <input  type="time" class="form-control" id="eventEndTimeEdit" placeholder="End Time">
                         </div>
                     
                         
-                        <div class="container1">
-                            <button class="add_form_field">Invite Others &nbsp; 
+                        <div class="editContainer">
+                            <button class="edit_form_field">Invite Others &nbsp; 
                             <span style="font-size:16px; font-weight:bold;">+ </span>
                             </button>
                             <!--<div><input type="text" name="mytext[]" id="invite" placeholder="Enter Invite" class="form-control name_list"></div>-->
@@ -92,17 +92,17 @@
                     </div>
 
                     <form class="modal-body">
-                         <input type="text" class="form-control" id="eventTitle4" placeholder="Event Title">
+                         <input type="text" class="form-control" id="eventTitleAdd" placeholder="Event Title">
                         
-                        <input  type="text" class="form-control" id="eventLocation4" placeholder="Location">
+                        <input  type="text" class="form-control" id="eventLocationAdd" placeholder="Location">
                  
                         <div id="startContainer">
-                            <input  type="date" class="form-control" id="eventStartDate4" placeholder="Start Date">
-                            <input type="time" class="form-control" id="eventStartTime4" placeholder="Start Time">
+                            <input  type="date" class="form-control" id="eventStartDateAdd" placeholder="Start Date">
+                            <input type="time" class="form-control" id="eventStartTimeAdd" placeholder="Start Time">
                         </div>
                         <div id="endContainer">
-                            <input  type="date" class="form-control" id="eventEndDate4" placeholder="End Date">
-                            <input  type="time" class="form-control" id="eventEndTime4" placeholder="End Time">
+                            <input  type="date" class="form-control" id="eventEndDateAdd" placeholder="End Date">
+                            <input  type="time" class="form-control" id="eventEndTimeAdd" placeholder="End Time">
                         </div>
                     
                         
@@ -178,22 +178,21 @@ export default {
         dialog: false
     }),
     methods: {
-        addi(){
-            var title = $('#eventTitle3').val();
-            var location = $('#eventLocation3').val();
-            var sdate = $('#eventStartDate3').val();
-            var edate = $('#eventEndDate3').val();
-            var sTime = $('#eventEndDate3').val();
-            var eTime = $('#eventEndTime3').val();
-            var values = $("input[id='invitey']").map(function(){return $(this).val();}).get();
-
-            console.log("addi()"+sdate+edate+title+location+eTime+sTime+values);
-       
-
+        openmodal(){
+            $('#datePicker').val();
+            $('#eventTitleEdit').val();
+            $('#eventLocationEdit').val();
+            $('#eventStartDateEdit').val();
+            $('#eventStartTimeEdit').val();
+            $('#eventEndDateEdit').val();
+            $('#eventEndTimeEdit').val();
+            $("input[id='editinvited']").val();
+            console.log("open modal");
         },
         rmv(){
             $('.name_list').remove();
             $('.delete').remove();
+            $('.editorname_list').remove();
             console.log("input removed");
             this.currentlyEditing = null;
         },
@@ -232,13 +231,13 @@ export default {
         },
         async addNewEvent(){
   
-            var title = $('#eventTitle1').val();
-            var location = $('#eventLocation1').val();
-            var sdate = $('#eventStartDate1').val();
-            var edate = $('#eventEndDate1').val();
-            var sTime = $('#eventEndDate1').val();
-            var eTime = $('#eventEndTime1').val();
-            var values = $("input[id='invitey']").map(function(){return $(this).val();}).get();
+            var title = $('#eventTitleAdd').val();
+            var location = $('#eventLocationAdd').val();
+            var sdate = $('#eventStartDateAdd').val();
+            var edate = $('#eventEndDateAdd').val();
+            var sTime = $('#eventEndDateAdd').val();
+            var eTime = $('#eventEndTimeAdd').val();
+            var values = $("input[id='addInvited']").map(function(){return $(this).val();}).get();
 
             console.log("addNew()"+sdate+edate+title+location+eTime+sTime+values);
        
@@ -275,25 +274,27 @@ export default {
         },
         async addNewModalEvent(){
             var tempEvent = [];
-            var title = $('#eventTitle4').val();
-            var location = $('#eventLocation4').val();
-            var sdate = $('#eventStartDate4').val();
-            var edate = $('#eventEndDate4').val();
-            var sTime = $('#eventEndDate4').val();
-            var eTime = $('#eventEndTime4').val();
-            var values = $("input[id='invitey']").map(function(){return $(this).val();}).get();
+            var title = $('#eventTitleAdd').val();
+            var location = $('#eventLocationAdd').val();
+            var sdate = $('#eventStartDateAdd').val();
+            var edate = $('#eventEndDateAdd').val();
+            var sTime = $('#eventEndDateAdd').val();
+            var eTime = $('#eventEndTimeAdd').val();
+            var values = $("input[id='addInvited']").map(function(){return $(this).val();}).get();
 
             console.log("addNew()"+sdate+edate+title+location+eTime+sTime+values);
 
-            tempEvent.title = $('#eventTitle4').val();
-            tempEvent.name = $('#eventTitle4').val();
-            tempEvent.location = $('#eventLocation4').val();
-            tempEvent.startDate = $('#eventStartDate4').val();
-            tempEvent.startTime = $('#eventStartTime4').val();
-            tempEvent.endDate = $('#eventEndDate4').val();
-            tempEvent.endTime = $('#eventEndTime4').val();
+            tempEvent.title = $('#eventTitleAdd').val();
+            tempEvent.name = $('#eventTitleAdd').val();
+            tempEvent.location = $('#eventLocationAdd').val();
+            tempEvent.startDate = $('#eventStartDateAdd').val();
+            tempEvent.startTime = $('#eventStartTimeAdd').val();
+            tempEvent.endDate = $('#eventEndDateAdd').val();
+            tempEvent.endTime = $('#eventEndTimeAdd').val();
+            tempEvent.invited = $("input[id='addInvited']").map(function(){return $(this).val();}).get();
             this.addEvent(tempEvent);
-            //this.tempEvent = null;
+             $("#addModal").find("input,textarea,select").val('').end(); //clears form
+            this.tempEvent = null;
 
             //addEvent//
         },
@@ -317,6 +318,16 @@ export default {
             this.dialog = true
         }, 
         editingEvent(event){
+            this.rmv();
+            $('#datePicker').val();
+            $('#eventTitleEdit').val();
+            $('#eventLocationEdit').val();
+            $('#eventStartDateEdit').val();
+            $('#eventStartTimeEdit').val();
+            $('#eventEndDateEdit').val();
+            $('#eventEndTimeEdit').val();
+            $("input[id='editinvited']").val();
+
             //this.dialog = true
             //this.selectedOpen = true
             this.selectedEvent = event
@@ -330,23 +341,26 @@ export default {
             var day = ("0" + now.getDate()).slice(-2);
             var month = ("0" + (now.getMonth() + 1)).slice(-2);
             var today = now.getFullYear()+"-"+(month)+"-"+(day);
-           // var wrapper = $(".container1");
+           
             //var dt = new Date();
             //var time = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
 
 
             $('#datePicker').val(today);
-            $('#eventTitle3').val(event.title);
-            $('#eventLocation3').val(event.location);
-            $('#eventStartDate3').val(event.startDate);
-            $('#eventStartTime3').val("17:39:57");
-            $('#eventEndDate3').val(event.endDate);
-            $('#eventEndTime3').val("17:39:57");
+            $('#eventTitleEdit').val(event.title);
+            $('#eventLocationEdit').val(event.location);
+            $('#eventStartDateEdit').val(event.startDate);
+          //  $('#eventStartTimeEdit').val("17:39:57");
+            $('#eventEndDateEdit').val(event.endDate);
+           // $('#eventEndTimeEdit').val("17:39:57");
+            //$("input[id='editinvited']").map(function(){return $(this).val();}).get();
+
+
             
-           /* $.each( event.invitey, function( i, val ) {
-                $(wrapper).append('<div><input value="'+val+'" type="text" name="xyz[]" id="invitey" class="form-control name_list"><a href="#" class="delete">Delete</a></div>'); //add input box
-                console.log(event.invitey.length+i+val);
-            });*/
+            $.each( event.invited, function( i, val ) {
+                $(".editContainer").append('<div><input value="'+val+'" type="text" name="xyz[]" id="editinvited" class="form-control editorname_list"><a href="#" class="delete">Delete</a></div>'); //add input box
+                console.log(event.invited.length+i+val);
+            });
 
             
         }, 
@@ -391,18 +405,30 @@ export default {
             this.dialog = false;
         },
         async updateNewEventModal(){
+            //send put request to 
            // var uemail = sessionStorage.getItem('username');
             
-            this.currentlyEditing.title = $('#eventTitle3').val();
-            this.currentlyEditing.name = $('#eventTitle3').val();
-            this.currentlyEditing.location = $('#eventLocation3').val();
-            this.currentlyEditing.startDate = $('#eventStartDate3').val();
-            this.currentlyEditing.startTime = $('#eventStartTime3').val();
-            this.currentlyEditing.endDate = $('#eventEndDate3').val();
-            this.currentlyEditing.endTime = $('#eventEndTime3').val();
+            this.currentlyEditing.title = $('#eventTitleEdit').val();
+            this.currentlyEditing.name = $('#eventTitleEdit').val();
+            this.currentlyEditing.location = $('#eventLocationEdit').val();
+            this.currentlyEditing.startDate = $('#eventStartDateEdit').val();
+            this.currentlyEditing.startTime = $('#eventStartTimeEdit').val();
+            this.currentlyEditing.endDate = $('#eventEndDateEdit').val();
+            this.currentlyEditing.endTime = $('#eventEndTimeEdit').val();
+            this.currentlyEditing.invited = [];
+            this.currentlyEditing.invited = $("input[id='editinvited']").map(function(){return $(this).val();}).get();
+  
+
+            
+           // $.each( invite, function( i, val ) {
+            //    this.currentlyEditing.invited.push(val);
+            //   console.log(event.invited.length+i+val);
+          //  });
+
+            
             console.log(this.currentlyEditing)
             //this.addEvent(this.currentlyEditing);
-
+            this.rmv();
             this.selectedOpen = false;
             this.currentlyEditing = null;
            // this.dialog = false;
@@ -459,19 +485,19 @@ export default {
    font-size: .85714rem;  
 }
 
-#eventTitle,#eventTitle3, #eventLocation,#eventLocation3,#startContainer,#startContainer3,#endContainer,#endContainer3{
+#eventTitleAdd,#eventTitleEdit, #eventLocationAdd,#eventLocationEdit,#startContainer,#startContainer3,#endContainer,#endContainer3{
     margin-bottom: 15px;
 }
 #startContainer,#startContainer3,#endContainer,#endContainer3{
     width:100%
 }
-#eventStartDate,#eventStartDate3, #eventEndDate,#eventEndDate3{
+#eventStartDateAdd,#eventStartDateEdit, #eventEndDateAdd,#eventEndDateEdit{
     float: left;
     width:45%;
     margin-right: 25px;  
 }
 
-#eventStartTime,#eventStartTime3, #eventEndTime,#eventEndTime3{
+#eventStartTimeAdd,#eventStartTimeEdit, #eventEndTimeAdd,#eventEndTimeEdit{
     width:45%; 
 }
 

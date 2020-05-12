@@ -91,7 +91,28 @@
               e.preventDefault();
               if (x < max_fields) {
                   x++;
-                  $(wrapper).append('<div><input type="text" name="xyz[]" id="invitey" placeholder="Enter Invite" class="form-control name_list"><a href="#" class="delete">Delete</a></div>'); //add input box
+                  $(wrapper).append('<div><input type="text" name="xyz[]" id="addInvited" placeholder="Enter Invite" class="form-control name_list"><a href="#" class="delete">Delete</a></div>'); //add input box
+              } else {
+                  alert('You Reached the limits')
+              }
+          });
+          $('#addModal').on('hidden.bs.modal', function () {
+            window.alert('hidden event fired!');
+          });
+          $('#myModal').on('hidden.bs.modal', function () {
+            window.alert('hidden event fired!');
+          });
+          $("#addModal").on('hide.bs.modal', function(){
+            alert("Hello World!");
+          });
+          
+
+
+          $(".edit_form_field").click(function(e) {
+              e.preventDefault();
+              if (x < max_fields) {
+                  x++;
+                  $(".editContainer").append('<div><input type="text" name="xyz[]" id="editinvited" placeholder="Enter Invite" class="form-control editorname_list"><a href="#" class="delete">Delete</a></div>'); //add input box
               } else {
                   alert('You Reached the limits')
               }
@@ -102,6 +123,12 @@
               $(this).parent('div').remove();
               x--;
           })
+
+          $(".editcontainer1").on("click", ".delete", function(e) {
+              e.preventDefault();
+              $(this).parent('div').remove();
+              x--;
+          });
 
           $(wrapper).on("click", "#closemodal", function(e) {
               e.preventDefault();
@@ -170,7 +197,7 @@
 
     <div id="sideNav">
       <img src="ava.png" alt="Avatar" style="width:50px">
-      <br><div id="name"><strong>Hello Tim</strong></div>
+      <br><div id="name"><strong>Hello Scott</strong></div>
       <br><button data-toggle="modal" data-target="#myModal" class="button button3">Create New Event  +</button>
       
       <a href="home.html"> <i class="fas fa-house-user"></i><span>Home</span></a>

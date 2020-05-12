@@ -18,7 +18,8 @@ const state = {
             startTime: "17:39:57",
             endDate: "2020-05-08",
             endTime: "17:39:57",
-            location: "YouTube"
+            location: "YouTube",
+            invited: ['Scolas']
         },
         {
             id: 3,
@@ -36,7 +37,8 @@ const state = {
             endDate: "2020-05-08",
             startTime: "17:39:57",
             endTime: "17:39:57",
-            location: "Building"
+            location: "Building",
+            invited: ['Scott', 'Colas']
         }
     ],
 
