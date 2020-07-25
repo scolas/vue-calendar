@@ -328,15 +328,9 @@ export default {
             $('#eventEndTimeEdit').val();
             $("input[id='editinvited']").val();
 
-            //this.dialog = true
-            //this.selectedOpen = true
             this.selectedEvent = event
             this.currentlyEditing = event
-          // this.currentlyEditing = event.id;
-          // data-toggle="modal" data-target="#myModal"
-           // $.noConflict(); 
-           // $('#myModal').modal('show'); 
-           var now = new Date();
+            var now = new Date();
 
             var day = ("0" + now.getDate()).slice(-2);
             var month = ("0" + (now.getMonth() + 1)).slice(-2);
